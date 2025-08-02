@@ -1,5 +1,6 @@
 "use client";
 import { LayoutWrapper } from "@/components/layout-wrapper";
+import { Gear } from "@/types";
 
 interface PhotographerInfo {
   tagline: string;
@@ -16,7 +17,7 @@ interface PhotographerInfo {
 
 interface AboutClientProps {
   photographerInfo: PhotographerInfo;
-  gear: any[];
+  gear: Gear[];
 }
 
 export default function AboutClient({ photographerInfo, gear }: AboutClientProps) {
@@ -68,14 +69,14 @@ export default function AboutClient({ photographerInfo, gear }: AboutClientProps
       <h2 className="text-2xl font-semibold mb-4">My Gear</h2>
       <ul className="list-disc list-inside space-y-1">
         {gear.map((item, idx) => (
-        <li key={idx}>{item}</li>
+        <li key={idx}>{item.description}</li>
         ))}
       </ul>
       </section>
 
       {/* Venues */}
       <section className="py-8">
-      <h2 className="text-2xl font-semibold mb-4">Venues I've Shot At</h2>
+      <h2 className="text-2xl font-semibold mb-4">Venues I&apos;ve Shot At</h2>
       <ul className="flex flex-wrap gap-2">
         {photographerInfo.venuesShot.map((venue, idx) => (
         <li key={idx} className="bg-gray-100 rounded px-3 py-1 text-sm">{venue}</li>
