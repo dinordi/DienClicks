@@ -9,6 +9,7 @@ import { LayoutWrapper } from "@/components/layout-wrapper";
 import { Camera, MapPin, Calendar, ArrowRight } from "lucide-react";
 import { ConcertEvent } from "@/types";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function HomePageClient() {
   const [events, setEvents] = useState<ConcertEvent[]>([]);
@@ -34,6 +35,21 @@ export default function HomePageClient() {
 
     fetchEvents();
   }, []);
+
+  useEffect(() => {
+    if (events.length === 0) {
+      console.warn('No events found');
+    }
+    events.forEach(event => {
+      if (!event.coverPhoto) {
+        console.warn(`Event ${event.id} is missing cover photo`);
+      }
+      else
+      {
+        // Make into signed URL if needed
+      }
+    });
+  }, [events]);
 
   const featuredEvents = events.slice(0, 3);
 
@@ -163,7 +179,13 @@ export default function HomePageClient() {
                   <CardContent className="p-0">
                     <div className="relative aspect-[4/3] overflow-hidden">
                       <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
-                        <Camera className="h-12 w-12 text-gray-600" />
+                        <Image
+                          src={event.coverPhoto}
+                          alt={event.artist}
+                          fill
+                          className="object-cover transition-transform duration-300 group-hover:scale-105"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
                       </div>
                       <div className="image-overlay flex items-center justify-center">
                         <Button variant="outline" size="sm" className="bg-white/10 border-white/20 text-white hover:bg-white hover:text-black">

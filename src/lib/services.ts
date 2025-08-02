@@ -68,13 +68,18 @@ export async function getConcertEvents(): Promise<ConcertEvent[]> {
       })
     );
 
+
+    const coverBucket = eventRow.cover_photo.split('/')[1];
+    const coverObjectName = eventRow.cover_photo.split('/')[2];
+    const signedCoverPhoto = await getPresignedImageUrl(coverBucket, coverObjectName);
+
     const event: ConcertEvent = {
       id: eventRow.id,
       artist: eventRow.artist,
       venue: eventRow.venue,
       date: eventRow.date.toISOString().split('T')[0],
       description: eventRow.description,
-      coverPhoto: eventRow.cover_photo,
+      coverPhoto: signedCoverPhoto,
       photos,
       setlist: eventRow.setlist,
       notes: eventRow.notes,
