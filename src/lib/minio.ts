@@ -20,7 +20,13 @@ export function getMinioClient() {
     const accessKey = process.env.MINIO_ACCESS_KEY!;
     const secretKey = process.env.MINIO_SECRET_KEY!;
     const portEnv = process.env.MINIO_PORT;
-    let clientConfig: any = { endPoint, useSSL, accessKey, secretKey };
+    const clientConfig: {
+      endPoint: string;
+      useSSL: boolean;
+      accessKey: string;
+      secretKey: string;
+      port?: number;
+    } = { endPoint, useSSL, accessKey, secretKey };
     if (portEnv && portEnv !== '80' && portEnv !== '443') {
       clientConfig.port = parseInt(portEnv);
     }
