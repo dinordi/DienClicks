@@ -1,6 +1,8 @@
+
 import { getDb } from '@/lib/database';
 import { ConcertEvent } from '@/types';
 import { Venue, Gear } from '@/types';
+import { getPresignedImageUrl } from '@/lib/minio';
 
 export async function getVenues(): Promise<Venue[]> {
   const db = getDb();
@@ -32,7 +34,40 @@ export async function getConcertEvents(): Promise<ConcertEvent[]> {
       WHERE event_id = $1 
       ORDER BY sort_order, created_at
     `, [eventRow.id]);
-    
+
+    // Generate pre-signed URLs for each photo
+    const photos = await Promise.all(
+      photosResult.rows.map(async row => {
+        // src is in the format "bucket_name/filename.jpg"
+        console.log("row.src", row.src);
+        const objectParts = row.src.split('/');
+        const bucket = objectParts[1];
+        const objectName = objectParts[2];
+
+        console.log(`Generating pre-signed URL for photo ${row.id} in bucket ${bucket}, object ${objectName}`);
+        let url = '';
+        try {
+          url = await getPresignedImageUrl(bucket, objectName);
+        } catch (e) {
+          console.error(`Failed to generate pre-signed URL for photo ${row.id}:`, e);
+        }
+        console.log(`Photo ${row.id} pre-signed URL: ${url}`);
+        return {
+          id: row.id,
+          src: row.src,
+          url,
+          alt: row.alt,
+          artist: row.artist,
+          venue: row.venue,
+          date: row.date.toISOString().split('T')[0],
+          description: row.description,
+          gear: row.gear,
+          width: row.width,
+          height: row.height,
+        };
+      })
+    );
+
     const event: ConcertEvent = {
       id: eventRow.id,
       artist: eventRow.artist,
@@ -40,23 +75,12 @@ export async function getConcertEvents(): Promise<ConcertEvent[]> {
       date: eventRow.date.toISOString().split('T')[0],
       description: eventRow.description,
       coverPhoto: eventRow.cover_photo,
-      photos: photosResult.rows.map(row => ({
-        id: row.id,
-        src: row.src,
-        alt: row.alt,
-        artist: row.artist,
-        venue: row.venue,
-        date: row.date.toISOString().split('T')[0],
-        description: row.description,
-        gear: row.gear,
-        width: row.width,
-        height: row.height,
-      })),
+      photos,
       setlist: eventRow.setlist,
       notes: eventRow.notes,
       gear: eventRow.gear,
     };
-    
+
     events.push(event);
   }
   

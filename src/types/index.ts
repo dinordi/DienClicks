@@ -1,6 +1,7 @@
 export interface ConcertPhoto {
   id: string;
   src: string;
+  url?: string; // Pre-signed URL for secure access
   alt: string;
   artist: string;
   venue: string;

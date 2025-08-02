@@ -69,7 +69,7 @@ export default function PortfolioPageClient({ events }: PortfolioPageClientProps
                     </div>
                     <div className="flex items-center space-x-2">
                       <Calendar className="h-5 w-5" />
-                      <span>{new Date(event.date).toLocaleDateString()}</span>
+                      <span>{event.date}</span>
                     </div>
                   </div>
                   {event.description && (
@@ -94,7 +94,11 @@ export default function PortfolioPageClient({ events }: PortfolioPageClientProps
                         <CardContent className="p-0">
                           <div className="relative aspect-[4/3] overflow-hidden">
                             <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
-                              <Camera className="h-12 w-12 text-gray-600" />
+                              <img
+                                src={photo.url}
+                                alt={photo.alt}
+                                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                              />
                             </div>
                             <div className="image-overlay">
                               <div className="p-4 text-white">
