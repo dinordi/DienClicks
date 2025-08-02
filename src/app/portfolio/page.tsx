@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { LayoutWrapper } from "@/components/layout-wrapper";
 import { concertEvents } from "@/data/portfolio";
-import { Camera, MapPin, Calendar, Clock, Users, Music } from "lucide-react";
+import { Camera, MapPin, Calendar, Music } from "lucide-react";
 
 export default function Portfolio() {
   return (
@@ -26,7 +26,7 @@ export default function Portfolio() {
               <span className="gradient-text">Portfolio</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 mb-8">
-              A collection of my concert photography work from Amsterdam's premier venues
+              A collection of my concert photography work from Amsterdam&apos;s premier venues
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-400">
               <div className="flex items-center space-x-2">
@@ -210,7 +210,7 @@ export default function Portfolio() {
               Interested in Concert Photography Services?
             </h2>
             <p className="text-xl text-muted-foreground mb-8">
-              Let's discuss how I can capture your next live music event with professional quality and artistic vision.
+              Let&apos;s discuss how I can capture your next live music event with professional quality and artistic vision.
             </p>
             <Button asChild size="lg" className="bg-white text-black hover:bg-gray-200">
               <Link href="/contact">

@@ -7,7 +7,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Separator } from "@/components/ui/separator";
 import { LayoutWrapper } from "@/components/layout-wrapper";
 import { photographerInfo } from "@/data/portfolio";
 import { 
@@ -17,7 +16,6 @@ import {
   Camera, 
   Send,
   Clock,
-  Phone,
   MessageSquare
 } from "lucide-react";
 
@@ -75,10 +73,10 @@ export default function Contact() {
             className="text-center max-w-4xl mx-auto"
           >
             <h1 className="text-5xl md:text-7xl font-bold mb-6">
-              <span className="gradient-text">Let's Work Together</span>
+              <span className="gradient-text">Let&apos;s Work Together</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 mb-8">
-              Ready to capture your next live music event? Let's discuss your photography needs.
+              Ready to capture your next live music event? Let&apos;s discuss your photography needs.
             </p>
             <div className="flex justify-center">
               <Camera className="h-16 w-16 text-white" />

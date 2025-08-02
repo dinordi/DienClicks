@@ -79,7 +79,7 @@ export default function About() {
                   What started as a passion for music evolved into a career capturing the raw energy and emotion of live performances. Every concert is a unique story waiting to be told through the lens.
                 </p>
                 <p>
-                  My approach combines technical expertise with an artistic eye, always seeking those split-second moments that define a performance - the guitarist's intense focus, the crowd's unified energy, the dramatic interplay of light and shadow.
+                  My approach combines technical expertise with an artistic eye, always seeking those split-second moments that define a performance - the guitarist&apos;s intense focus, the crowd&apos;s unified energy, the dramatic interplay of light and shadow.
                 </p>
               </div>
             </motion.div>
@@ -252,9 +252,9 @@ export default function About() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">Venues I've Worked With</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">Venues I&apos;ve Worked With</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Trusted by Amsterdam's most prestigious music venues and beyond
+              Trusted by Amsterdam&apos;s most prestigious music venues and beyond
             </p>
           </motion.div>
 

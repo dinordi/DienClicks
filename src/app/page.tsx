@@ -96,7 +96,7 @@ export default function Home() {
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">Featured Work</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Recent concert photography from Amsterdam's top venues
+              Recent concert photography from Amsterdam&apos;s top venues
             </p>
           </motion.div>
 
@@ -181,9 +181,9 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">Venues I've Shot At</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">Venues I&apos;ve Shot At</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              The Netherland's most prestigious music venues
+              The Netherlands&apos; most prestigious music venues
             </p>
           </motion.div>
 

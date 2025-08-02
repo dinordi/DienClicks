@@ -25,10 +25,8 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // Enable experimental features for better Docker performance
-  experimental: {
-    serverComponentsExternalPackages: ["minio"],
-  },
+  // Enable external packages for better Docker performance
+  serverExternalPackages: ["minio"],
 };
 
 export default nextConfig;
