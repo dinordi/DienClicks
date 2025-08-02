@@ -179,15 +179,15 @@ export const concertEvents: ConcertEvent[] = [
 
 // Bio and about information
 export const photographerInfo = {
-  name: "Concert Photographer",
-  tagline: "Live Music Moments Captured in the Spotlight", 
-  bio: "Passionate about capturing the raw energy and emotion of live music performances. With access to some of the Netherlands' most prestigious venues including Ziggo Dome, AFAS Live, and 013 Tilburg, I specialize in documenting the magic that happens when artists connect with their audience.",
-  experience: "5+ years of concert photography",
+  name: "DienClicks",
+  tagline: "Sweet moments in the spotlight, where music meets magic", 
+  bio: "Passionate about capturing the dreamy, light-hearted essence of live music performances. With a soft touch and love for pink hues, I create concert photography that feels as warm and welcoming as the artists themselves. With access to some of the Netherlands' most prestigious venues, I specialize in documenting the magical moments when music and joy collide.",
+  experience: "5+ years of dreamy concert photography",
   venuesShot: ["Ziggo Dome", "AFAS Live", "013 Tilburg", "Melkweg", "Paradiso", "TivoliVredenburg"],
-  specialties: ["Low-light photography", "Stage lighting mastery", "Crowd dynamics", "Artist portraiture"],
+  specialties: ["Low-light photography", "Dreamy stage captures", "Soft concert aesthetics", "Artist portraiture", "Pink-tinted magic"],
   contact: {
-    email: "hello@concertphotographer.com",
-    instagram: "@concertphotographer",
+    email: "hello@dienclicks.com",
+    instagram: "@dienclicks",
     location: "Amsterdam, Netherlands"
   }
 };

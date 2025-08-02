@@ -64,8 +64,12 @@ export default function Contact() {
   return (
     <LayoutWrapper>
       {/* Hero Section */}
-      <section className="py-24 bg-gradient-to-br from-black via-gray-900 to-black">
-        <div className="container mx-auto px-4">
+      <section className="py-24 pink-gradient-bg relative overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-pink-300/20 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-rose-300/20 rounded-full blur-3xl"></div>
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -75,19 +79,22 @@ export default function Contact() {
             <h1 className="text-5xl md:text-7xl font-bold mb-6">
               <span className="gradient-text">Let&apos;s Work Together</span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-300 mb-8">
-              Ready to capture your next live music event? Let&apos;s discuss your photography needs.
+            <p className="text-xl md:text-2xl text-muted-foreground mb-8">
+              Ready to capture your next live music event with a dreamy touch? Let&apos;s discuss your photography needs.
             </p>
-            <div className="flex justify-center">
-              <Camera className="h-16 w-16 text-white" />
+            <div className="inline-flex p-4 rounded-3xl bg-white/80 backdrop-blur-sm shadow-lg shadow-pink-500/20">
+              <Camera className="h-16 w-16 text-pink-500" />
             </div>
           </motion.div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section className="py-24 bg-background">
-        <div className="container mx-auto px-4">
+      <section className="py-24 bg-background relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-pink-100/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-rose-100/20 rounded-full blur-3xl"></div>
+        
+        <div className="container mx-auto px-4 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Contact Form */}
             <motion.div
@@ -96,14 +103,12 @@ export default function Contact() {
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              <Card className="bg-card/50 backdrop-blur-sm border-border/50">
-                <CardHeader>
-                  <CardTitle className="text-2xl flex items-center">
-                    <MessageSquare className="h-6 w-6 mr-2" />
+              <div className="concert-card">
+                <div className="p-8">
+                  <h3 className="text-2xl font-semibold mb-6 flex items-center gradient-text">
+                    <MessageSquare className="h-6 w-6 mr-2 text-pink-500" />
                     Get In Touch
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
+                  </h3>
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-2">
@@ -115,7 +120,7 @@ export default function Contact() {
                           onChange={handleChange}
                           placeholder="Your name"
                           required
-                          className="bg-background/50"
+                          className="bg-pink-50/50 border-pink-200 focus:border-pink-400 rounded-xl"
                         />
                       </div>
                       <div className="space-y-2">
@@ -128,7 +133,7 @@ export default function Contact() {
                           onChange={handleChange}
                           placeholder="your@email.com"
                           required
-                          className="bg-background/50"
+                          className="bg-pink-50/50 border-pink-200 focus:border-pink-400 rounded-xl"
                         />
                       </div>
                     </div>
@@ -142,7 +147,7 @@ export default function Contact() {
                           value={formData.venue}
                           onChange={handleChange}
                           placeholder="e.g., Ziggo Dome, AFAS Live"
-                          className="bg-background/50"
+                          className="bg-pink-50/50 border-pink-200 focus:border-pink-400 rounded-xl"
                         />
                       </div>
                       <div className="space-y-2">
@@ -153,7 +158,7 @@ export default function Contact() {
                           type="date"
                           value={formData.eventDate}
                           onChange={handleChange}
-                          className="bg-background/50"
+                          className="bg-pink-50/50 border-pink-200 focus:border-pink-400 rounded-xl"
                         />
                       </div>
                     </div>
@@ -166,7 +171,7 @@ export default function Contact() {
                         value={formData.eventType}
                         onChange={handleChange}
                         placeholder="e.g., Concert, Festival, Private Event"
-                        className="bg-background/50"
+                        className="bg-pink-50/50 border-pink-200 focus:border-pink-400 rounded-xl"
                       />
                     </div>
 
@@ -180,13 +185,13 @@ export default function Contact() {
                         placeholder="Tell me about your event, requirements, and any specific shots you have in mind..."
                         rows={6}
                         required
-                        className="bg-background/50"
+                        className="bg-pink-50/50 border-pink-200 focus:border-pink-400 rounded-xl"
                       />
                     </div>
 
                     <Button 
                       type="submit" 
-                      className="w-full bg-white text-black hover:bg-gray-200"
+                      className="w-full bg-gradient-to-r from-pink-400 to-rose-500 text-white shadow-lg shadow-pink-500/30 hover:shadow-pink-500/50 rounded-xl border-0 hover:from-pink-500 hover:to-rose-600 transition-all duration-300"
                       disabled={isSubmitting}
                     >
                       {isSubmitting ? (
@@ -199,8 +204,8 @@ export default function Contact() {
                       )}
                     </Button>
                   </form>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </motion.div>
 
             {/* Contact Info */}
@@ -212,12 +217,14 @@ export default function Contact() {
               className="space-y-8"
             >
               {/* Contact Details */}
-              <Card className="bg-card/30 backdrop-blur-sm border-border/30">
-                <CardContent className="p-8">
-                  <h3 className="text-2xl font-semibold mb-6">Contact Information</h3>
+              <div className="concert-card">
+                <div className="p-8">
+                  <h3 className="text-2xl font-semibold mb-6 gradient-text">Contact Information</h3>
                   <div className="space-y-4">
                     <div className="flex items-center space-x-4">
-                      <Mail className="h-5 w-5 text-white" />
+                      <div className="p-2 rounded-xl bg-pink-100">
+                        <Mail className="h-5 w-5 text-pink-500" />
+                      </div>
                       <div>
                         <p className="font-medium">Email</p>
                         <p className="text-muted-foreground">{photographerInfo.contact.email}</p>
@@ -225,7 +232,9 @@ export default function Contact() {
                     </div>
                     
                     <div className="flex items-center space-x-4">
-                      <Instagram className="h-5 w-5 text-white" />
+                      <div className="p-2 rounded-xl bg-pink-100">
+                        <Instagram className="h-5 w-5 text-pink-500" />
+                      </div>
                       <div>
                         <p className="font-medium">Instagram</p>
                         <p className="text-muted-foreground">{photographerInfo.contact.instagram}</p>
@@ -233,70 +242,76 @@ export default function Contact() {
                     </div>
                     
                     <div className="flex items-center space-x-4">
-                      <MapPin className="h-5 w-5 text-white" />
+                      <div className="p-2 rounded-xl bg-pink-100">
+                        <MapPin className="h-5 w-5 text-pink-500" />
+                      </div>
                       <div>
                         <p className="font-medium">Location</p>
                         <p className="text-muted-foreground">{photographerInfo.contact.location}</p>
                       </div>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
 
               {/* Response Time */}
-              <Card className="bg-card/30 backdrop-blur-sm border-border/30">
-                <CardContent className="p-8">
-                  <h3 className="text-2xl font-semibold mb-6 flex items-center">
-                    <Clock className="h-6 w-6 mr-2" />
+              <div className="concert-card">
+                <div className="p-8">
+                  <h3 className="text-2xl font-semibold mb-6 flex items-center gradient-text">
+                    <Clock className="h-6 w-6 mr-2 text-pink-500" />
                     Response Time
                   </h3>
                   <div className="space-y-4 text-muted-foreground">
                     <p>
-                      I typically respond to all inquiries within <strong className="text-white">24 hours</strong>.
+                      I typically respond to all inquiries within <strong className="text-foreground gradient-text">24 hours</strong>.
                     </p>
                     <p>
                       For urgent requests or events happening within the next week, please mention it in your message for priority handling.
                     </p>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
 
               {/* Services */}
-              <Card className="bg-card/30 backdrop-blur-sm border-border/30">
-                <CardContent className="p-8">
-                  <h3 className="text-2xl font-semibold mb-6">Services Available</h3>
+              <div className="concert-card">
+                <div className="p-8">
+                  <h3 className="text-2xl font-semibold mb-6 gradient-text">Services Available</h3>
                   <div className="space-y-3 text-muted-foreground">
                     <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-white rounded-full"></div>
+                      <div className="w-2 h-2 bg-pink-400 rounded-full"></div>
                       <span>Concert Photography</span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-white rounded-full"></div>
+                      <div className="w-2 h-2 bg-pink-400 rounded-full"></div>
                       <span>Festival Coverage</span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-white rounded-full"></div>
+                      <div className="w-2 h-2 bg-pink-400 rounded-full"></div>
                       <span>Artist Portraits</span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-white rounded-full"></div>
+                      <div className="w-2 h-2 bg-pink-400 rounded-full"></div>
                       <span>Behind-the-Scenes</span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-white rounded-full"></div>
+                      <div className="w-2 h-2 bg-pink-400 rounded-full"></div>
                       <span>Press/Media Coverage</span>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="py-24 bg-muted/30">
-        <div className="container mx-auto px-4">
+      <section className="py-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-pink-50/50 via-rose-50/30 to-pink-100/50"></div>
+        <div className="absolute top-0 left-0 w-72 h-72 bg-pink-200/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-64 h-64 bg-rose-200/20 rounded-full blur-3xl"></div>
+        
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -304,9 +319,11 @@ export default function Contact() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">Frequently Asked Questions</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <span className="gradient-text">Frequently Asked Questions</span>
+            </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Common questions about concert photography services
+              Common questions about dreamy concert photography services
             </p>
           </motion.div>
 
@@ -314,19 +331,19 @@ export default function Contact() {
             {[
               {
                 question: "What venues do you have access to?",
-                answer: "I have photo accreditation with major venues including Ziggo Dome, AFAS Live, 013 Tilburg, and many others across the Netherlands."
+                answer: "I have photo accreditation with major venues including Ziggo Dome, AFAS Live, 013 Tilburg, and many others across the Netherlands. Each venue brings its own magical atmosphere to capture."
               },
               {
                 question: "Do you provide RAW files?",
-                answer: "I deliver professionally edited high-resolution images. RAW files can be provided upon request for an additional fee."
+                answer: "I deliver professionally edited high-resolution images with my signature dreamy touch. RAW files can be provided upon request for an additional fee."
               },
               {
                 question: "How quickly will I receive the photos?",
-                answer: "For concerts, edited photos are typically delivered within 3-5 business days. Rush delivery is available for urgent needs."
+                answer: "For concerts, beautifully edited photos are typically delivered within 3-5 business days. Rush delivery is available for urgent needs."
               },
               {
                 question: "Can you shoot without flash?",
-                answer: "Absolutely! Concert photography requires no flash. I specialize in working with existing stage lighting to create dramatic, professional images."
+                answer: "Absolutely! Concert photography requires no flash. I specialize in working with existing stage lighting to create dreamy, soft, and magical images that capture the mood perfectly."
               }
             ].map((faq, index) => (
               <motion.div
@@ -336,12 +353,12 @@ export default function Contact() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <Card className="h-full bg-card/30 backdrop-blur-sm border-border/30">
-                  <CardContent className="p-6">
-                    <h3 className="text-lg font-semibold mb-3">{faq.question}</h3>
+                <div className="h-full concert-card">
+                  <div className="p-6">
+                    <h3 className="text-lg font-semibold mb-3 gradient-text">{faq.question}</h3>
                     <p className="text-muted-foreground">{faq.answer}</p>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               </motion.div>
             ))}
           </div>
