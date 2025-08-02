@@ -20,7 +20,9 @@ services:
 
   # Next.js Photography Portfolio
   photography-portfolio:
-    image: ghcr.io/dinordi/concert-photography-portfolio:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: photography-portfolio
     ports:
       - "3000:3000"
