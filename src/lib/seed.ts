@@ -9,7 +9,7 @@ export async function seedDatabase() {
   await initDatabase();
   
   // Initialize MinIO buckets
-  await initMinIO();
+//   await initMinIO();
   
   const db = getDb();
   
@@ -72,8 +72,8 @@ export async function seedDatabase() {
     for (let i = 0; i < event.photos.length; i++) {
       const photo = event.photos[i];
       await db.query(`
-        INSERT INTO concert_photos (id, event_id, src, alt, artist, venue, date, description, gear, width, height, sort_order)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+        INSERT INTO concert_photos (id, event_id, src, alt, artist, venue, date, description, width, height, sort_order)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
         ON CONFLICT (id) DO UPDATE SET
           event_id = EXCLUDED.event_id,
           src = EXCLUDED.src,
@@ -82,7 +82,6 @@ export async function seedDatabase() {
           venue = EXCLUDED.venue,
           date = EXCLUDED.date,
           description = EXCLUDED.description,
-          gear = EXCLUDED.gear,
           width = EXCLUDED.width,
           height = EXCLUDED.height,
           sort_order = EXCLUDED.sort_order
@@ -95,11 +94,26 @@ export async function seedDatabase() {
         photo.venue,
         photo.date,
         photo.description,
-        photo.gear,
         photo.width,
         photo.height,
         i
       ]);
+      // Insert photo_gear associations (parse gear string to gear IDs if possible)
+      if (photo.gear) {
+        // Assume photo.gear is a string like "cameraId + lensId" or just a single gearId
+        const gearIds = photo.gear.split('+').map(g => g.trim()).filter(Boolean);
+        for (const gearId of gearIds) {
+          // Only insert if gearId exists in gear table
+          const exists = gear.some(g => g.id === gearId);
+          if (exists) {
+            await db.query(`
+              INSERT INTO photo_gear (photo_id, gear_id)
+              VALUES ($1, $2)
+              ON CONFLICT DO NOTHING
+            `, [photo.id, gearId]);
+          }
+        }
+      }
     }
   }
   

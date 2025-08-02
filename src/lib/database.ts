@@ -63,11 +63,19 @@ export async function initDatabase() {
       venue VARCHAR(255) NOT NULL,
       date DATE NOT NULL,
       description TEXT,
-      gear VARCHAR(255),
       width INTEGER NOT NULL,
       height INTEGER NOT NULL,
       sort_order INTEGER DEFAULT 0,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+  `);
+
+  // Join table for photo <-> gear (many-to-many)
+  await db.query(`
+    CREATE TABLE IF NOT EXISTS photo_gear (
+      photo_id VARCHAR(255) REFERENCES concert_photos(id) ON DELETE CASCADE,
+      gear_id VARCHAR(255) REFERENCES gear(id) ON DELETE CASCADE,
+      PRIMARY KEY (photo_id, gear_id)
     );
   `);
 
