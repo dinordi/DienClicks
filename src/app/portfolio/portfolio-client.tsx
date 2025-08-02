@@ -92,7 +92,7 @@ export default function PortfolioPageClient({ events }: PortfolioPageClientProps
                     >
                       <Card className="overflow-hidden bg-card/50 backdrop-blur-sm border-border/50 hover:border-border transition-all duration-300">
                         <CardContent className="p-0">
-                          <div className="relative aspect-[4/3] overflow-hidden">
+                          <div className="relative aspect-[3/4] overflow-hidden">
                             <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
                               <img
                                 src={photo.url}
