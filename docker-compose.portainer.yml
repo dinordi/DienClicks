@@ -12,7 +12,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: concert_photography
-      POSTGRES_USER: photographer
+      POSTGRES_USER: dienow
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     restart: unless-stopped
     networks:
