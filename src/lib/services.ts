@@ -1,5 +1,6 @@
 import { getDb } from '@/lib/database';
-import { ConcertEvent, ConcertPhoto, Venue, Gear } from '@/types';
+import { ConcertEvent } from '@/types';
+import { Venue, Gear } from '@/types';
 
 export async function getVenues(): Promise<Venue[]> {
   const db = getDb();

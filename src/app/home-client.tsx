@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { LayoutWrapper } from "@/components/layout-wrapper";
-import { photographerInfo } from "@/data/portfolio";
 import { Camera, MapPin, Calendar, ArrowRight } from "lucide-react";
 import { ConcertEvent } from "@/types";
 
@@ -48,11 +47,11 @@ export default function HomePageClient({ events }: HomePageClientProps) {
             </h1>
             
             <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              {photographerInfo.tagline}
+              {/* {photographerInfo.tagline} */}
             </p>
             
             <p className="text-lg text-gray-400 mb-12 max-w-3xl mx-auto">
-              {photographerInfo.bio}
+              {/* {photographerInfo.bio} */}
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -199,7 +198,7 @@ export default function HomePageClient({ events }: HomePageClientProps) {
             viewport={{ once: true }}
             className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6"
           >
-            {photographerInfo.venuesShot.map((venue, index) => (
+            {/* {photographerInfo.venuesShot.map((venue, index) => (
               <motion.div
                 key={venue}
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -212,7 +211,7 @@ export default function HomePageClient({ events }: HomePageClientProps) {
                   <p className="font-medium text-sm">{venue}</p>
                 </div>
               </motion.div>
-            ))}
+            ))} */}
           </motion.div>
         </div>
       </section>
