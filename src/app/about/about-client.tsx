@@ -1,6 +1,7 @@
 "use client";
 import { LayoutWrapper } from "@/components/layout-wrapper";
-import { Gear } from "@/types";
+import { Gear, Venue } from "@/types";
+import { useEffect, useState } from "react";
 
 interface PhotographerInfo {
   tagline: string;
@@ -15,12 +16,52 @@ interface PhotographerInfo {
   venuesShot: string[];
 }
 
-interface AboutClientProps {
-  photographerInfo: PhotographerInfo;
-  gear: Gear[];
-}
+export default function AboutClient() {
+  const [gear, setGear] = useState<Gear[]>([]);
+  const [venues, setVenues] = useState<Venue[]>([]);
+  const [loading, setLoading] = useState(true);
 
-export default function AboutClient({ photographerInfo, gear }: AboutClientProps) {
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [gearResponse, venuesResponse] = await Promise.all([
+          fetch('/api/gear'),
+          fetch('/api/venues')
+        ]);
+        
+        if (gearResponse.ok && venuesResponse.ok) {
+          const gearData = await gearResponse.json();
+          const venuesData = await venuesResponse.json();
+          setGear(gearData);
+          setVenues(venuesData);
+        }
+      } catch (err) {
+        console.error('Error fetching data:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  const photographerInfo: PhotographerInfo = {
+    tagline: "Capturing the energy of live music.",
+    experience: "5+ years",
+    contact: {
+      email: "photographer@example.com",
+      instagram: "@photographer",
+      location: "Amsterdam, NL"
+    },
+    specialties: [
+      "Low-light photography",
+      "Stage lighting mastery",
+      "Crowd dynamics",
+      "Artist portraiture"
+    ],
+    bio: "What started as a passion for music evolved into a career capturing the raw energy and emotion of live performances. Every concert is a unique story waiting to be told through the lens.",
+    venuesShot: venues.map(v => v.name)
+  };
   // ...existing About page JSX, using photographerInfo and gear as props...
   // For brevity, you can paste the entire About page JSX here, replacing all uses of photographerInfo and gear with the props
   // ...
@@ -67,21 +108,37 @@ export default function AboutClient({ photographerInfo, gear }: AboutClientProps
       {/* Gear */}
       <section className="py-8">
       <h2 className="text-2xl font-semibold mb-4">My Gear</h2>
-      <ul className="list-disc list-inside space-y-1">
-        {gear.map((item, idx) => (
-        <li key={idx}>{item.description}</li>
-        ))}
-      </ul>
+      {loading ? (
+        <div className="space-y-2">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div key={i} className="h-4 bg-gray-200 rounded animate-pulse"></div>
+          ))}
+        </div>
+      ) : (
+        <ul className="list-disc list-inside space-y-1">
+          {gear.map((item, idx) => (
+          <li key={idx}>{item.description}</li>
+          ))}
+        </ul>
+      )}
       </section>
 
       {/* Venues */}
       <section className="py-8">
       <h2 className="text-2xl font-semibold mb-4">Venues I&apos;ve Shot At</h2>
-      <ul className="flex flex-wrap gap-2">
-        {photographerInfo.venuesShot.map((venue, idx) => (
-        <li key={idx} className="bg-gray-100 rounded px-3 py-1 text-sm">{venue}</li>
-        ))}
-      </ul>
+      {loading ? (
+        <div className="flex flex-wrap gap-2">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div key={i} className="h-6 w-20 bg-gray-200 rounded animate-pulse"></div>
+          ))}
+        </div>
+      ) : (
+        <ul className="flex flex-wrap gap-2">
+          {photographerInfo.venuesShot.map((venue, idx) => (
+          <li key={idx} className="bg-gray-100 rounded px-3 py-1 text-sm">{venue}</li>
+          ))}
+        </ul>
+      )}
       </section>
     </LayoutWrapper>
   );

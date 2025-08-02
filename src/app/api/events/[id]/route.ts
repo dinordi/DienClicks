@@ -3,10 +3,11 @@ import { getConcertEventById } from '@/lib/services';
 
 export async function GET(
   _request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const event = await getConcertEventById(params.id);
+    const { id } = await params;
+    const event = await getConcertEventById(id);
     if (!event) {
       return NextResponse.json(
         { error: 'Event not found' },

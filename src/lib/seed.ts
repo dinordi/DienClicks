@@ -1,5 +1,4 @@
 import { getDb, initDatabase } from '@/lib/database';
-import { initMinIO } from '@/lib/minio';
 import { concertEvents, venues, gear } from '@/data/portfolio';
 
 export async function seedDatabase() {

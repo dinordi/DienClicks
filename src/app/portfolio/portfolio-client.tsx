@@ -9,12 +9,63 @@ import { Separator } from "@/components/ui/separator";
 import { LayoutWrapper } from "@/components/layout-wrapper";
 import { Camera, MapPin, Calendar, Music } from "lucide-react";
 import { ConcertEvent } from "@/types";
+import { useEffect, useState } from "react";
+import Image from "next/image";
 
-interface PortfolioPageClientProps {
-  events: ConcertEvent[];
-}
+export default function PortfolioPageClient() {
+  const [events, setEvents] = useState<ConcertEvent[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-export default function PortfolioPageClient({ events }: PortfolioPageClientProps) {
+  useEffect(() => {
+    async function fetchEvents() {
+      try {
+        const response = await fetch('/api/events');
+        if (!response.ok) {
+          throw new Error('Failed to fetch events');
+        }
+        const data = await response.json();
+        setEvents(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'An error occurred');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchEvents();
+  }, []);
+
+  if (loading) {
+    return (
+      <LayoutWrapper>
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-white"></div>
+            <p className="mt-4 text-lg">Loading portfolio...</p>
+          </div>
+        </div>
+      </LayoutWrapper>
+    );
+  }
+
+  if (error) {
+    return (
+      <LayoutWrapper>
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <p className="text-red-500 text-lg">Error: {error}</p>
+            <Button 
+              onClick={() => window.location.reload()} 
+              className="mt-4"
+            >
+              Try Again
+            </Button>
+          </div>
+        </div>
+      </LayoutWrapper>
+    );
+  }
   return (
     <LayoutWrapper>
       {/* Header Section */}
@@ -94,10 +145,12 @@ export default function PortfolioPageClient({ events }: PortfolioPageClientProps
                         <CardContent className="p-0">
                           <div className="relative aspect-[3/4] overflow-hidden">
                             <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
-                              <img
-                                src={photo.url}
+                              <Image
+                                src={photo.url || "/placeholder-image.jpg"}
                                 alt={photo.alt}
-                                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                fill
+                                className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                               />
                             </div>
                             <div className="image-overlay">

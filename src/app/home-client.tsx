@@ -8,12 +8,33 @@ import { Badge } from "@/components/ui/badge";
 import { LayoutWrapper } from "@/components/layout-wrapper";
 import { Camera, MapPin, Calendar, ArrowRight } from "lucide-react";
 import { ConcertEvent } from "@/types";
+import { useEffect, useState } from "react";
 
-interface HomePageClientProps {
-  events: ConcertEvent[];
-}
+export default function HomePageClient() {
+  const [events, setEvents] = useState<ConcertEvent[]>([]);
+  const [loading, setLoading] = useState(true);
 
-export default function HomePageClient({ events }: HomePageClientProps) {
+  useEffect(() => {
+    async function fetchEvents() {
+      try {
+        const response = await fetch('/api/events');
+        if (!response.ok) {
+          throw new Error('Failed to fetch events');
+        }
+        const data = await response.json();
+        setEvents(data);
+      } catch (err) {
+        console.error('Error fetching events:', err);
+        // Set empty array as fallback
+        setEvents([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchEvents();
+  }, []);
+
   const featuredEvents = events.slice(0, 3);
 
   return (
@@ -105,7 +126,32 @@ export default function HomePageClient({ events }: HomePageClientProps) {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredEvents.map((event, index) => (
+            {loading ? (
+              // Loading skeleton
+              Array.from({ length: 3 }).map((_, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                >
+                  <Card className="overflow-hidden bg-card/50 backdrop-blur-sm border-border/50">
+                    <CardContent className="p-0">
+                      <div className="relative aspect-[4/3] overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+                          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+                        </div>
+                      </div>
+                      <div className="p-6">
+                        <div className="h-6 bg-gray-700 rounded mb-2 animate-pulse"></div>
+                        <div className="h-4 bg-gray-700 rounded w-2/3 animate-pulse"></div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))
+            ) : featuredEvents.length > 0 ? (
+              featuredEvents.map((event, index) => (
               <motion.div
                 key={event.id}
                 initial={{ opacity: 0, y: 30 }}
@@ -155,7 +201,13 @@ export default function HomePageClient({ events }: HomePageClientProps) {
                   </CardContent>
                 </Card>
               </motion.div>
-            ))}
+            ))) : (
+              // No events fallback
+              <div className="col-span-full text-center py-12">
+                <Camera className="h-16 w-16 text-gray-600 mx-auto mb-4" />
+                <p className="text-lg text-muted-foreground">No featured events available at the moment.</p>
+              </div>
+            )}
           </div>
 
           <motion.div
